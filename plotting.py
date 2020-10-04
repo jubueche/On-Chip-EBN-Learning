@@ -1,7 +1,7 @@
 import numpy as np
 
 import matplotlib
-matplotlib.rc('font', family='Times New Roman')
+matplotlib.rc('font', family='Sans-Serif')
 matplotlib.rc('text', usetex=True)
 matplotlib.rcParams['lines.linewidth'] = 0.5
 matplotlib.rcParams['lines.markersize'] = 0.5
@@ -30,7 +30,7 @@ W_initial = np.asarray(load_dict["W_initial"])
 W_optimal = np.asarray(load_dict["W_optimal"])
 W_learned = np.asarray(load_dict["W_learned"])
 
-fig = plt.figure(figsize=(5,4.73))
+fig = plt.figure(figsize=(5.49,4.36))
 
 t_start = 0.5
 t_stop = 0.8
@@ -41,26 +41,39 @@ recon_optimal_sub = recon_optimal[:,(t > t_start) & (t < t_stop)]
 recon_learned_sub = recon_learned[:,(t > t_start) & (t < t_stop)]
 
 ax0 = fig.add_subplot(331)
-ax0.set_title(r"\textbf{A) Pre-learning}")
-ax0.plot(t_sub, recon_initial_sub.T, color="C2")
-ax0.plot(t_sub, target_sub, color="C4")
+top_lim = [-0.1,0.1]
+ax0.set_title(r"\textbf{A}")
+l1 = ax0.plot(t_sub, recon_initial_sub.T, color="C2")
+l2 = ax0.plot(t_sub, target_sub, color="C4")
 ax0.set_xticks([t_start,t_stop])
-ax0.set_ylabel(r"$x,\hat{x}$")
-ax0.set_yticks([],[])
+ax0.plot([0.5,0.55], [-0.08,-0.08], color="k", linewidth=0.5)
+ax0.text(x=0.5, y=-0.11, s="50 ms")
+ax0.set_ylim(top_lim)
+lines = [l1[0],l2[0]]
+ax0.legend(lines,[r"$\hat{x}$", r"$x$"], frameon=False, loc=2, prop={'size': 5})
 
 ax1 = fig.add_subplot(332)
-ax1.set_title(r"\textbf{B) Optimal}")
+ax1.set_title(r"\textbf{B}")
 ax1.plot(t_sub,recon_optimal_sub.T, color="C2")
 ax1.plot(t_sub,target_sub, color="C4")
 ax1.set_xticks([t_start,t_stop])
-ax1.set_yticks([],[])
+ax1.set_ylim(top_lim)
 
 ax2 = fig.add_subplot(333)
-ax2.set_title(r"\textbf{C) Post-learning}")
+ax2.set_title(r"\textbf{C}")
 ax2.plot(t_sub,recon_learned_sub.T, color="C2")
 ax2.plot(t_sub,target_sub, color="C4")
 ax2.set_xticks([t_start,t_stop])
-ax2.set_yticks([],[])
+ax2.set_ylim(top_lim)
+
+axes_top = [ax0,ax1,ax2]
+for ax_tmp in axes_top:
+    ax_tmp.spines["top"].set_visible(False)
+    ax_tmp.spines["right"].set_visible(False)
+    ax_tmp.spines["left"].set_visible(False)
+    ax_tmp.spines["bottom"].set_visible(False)
+    ax_tmp.set_xticks([])
+    ax_tmp.set_yticks([])
 
 ax3 = fig.add_subplot(334)
 nNetSize = W_initial.shape[0]
@@ -73,6 +86,10 @@ ax3.scatter(times_initial, channels_id_initial, color="k")
 ax3.set_yticks([0,nNetSize])
 ax3.set_xticks([0,tDuration])
 ax3.set_ylabel(r"Neuron ID")
+
+ax3.plot([0.0,0.2], [-3,-3], color="k", linewidth=0.5)
+ax3.text(x=0.01, y=-6, s="200 ms")
+
 
 ax4 = fig.add_subplot(335)
 channels = optimal_channels
@@ -92,25 +109,30 @@ ax5.scatter(times_learned, channels_id_learned, color="k")
 ax5.set_yticks([0,nNetSize])
 ax5.set_xticks([0,tDuration])
 
+axes_mid = [ax3,ax4,ax5]
+
+for ax_tmp in axes_mid:
+    ax_tmp.spines["top"].set_visible(False)
+    ax_tmp.spines["right"].set_visible(False)
+    ax_tmp.spines["left"].set_visible(False)
+    ax_tmp.spines["bottom"].set_visible(False)
+    ax_tmp.set_xticks([])
+    ax_tmp.set_yticks([])
+
+
 ax6 = fig.add_subplot(337)
-ax6.set_ylabel(r"Initial $\Omega$")
 im = plt.matshow(W_initial, fignum=False, cmap='RdBu')
-ax6.set_xticks([], [])
+plt.axis('off')
 
 ax7 = fig.add_subplot(338)
-ax7.set_ylabel(r"Optimal $\Omega$")
 im = plt.matshow(W_optimal, fignum=False, cmap='RdBu')
-ax7.set_xticks([], [])
+plt.axis('off')
 
 ax8 = fig.add_subplot(339)
-ax8.set_ylabel(r"Learned $\Omega$")
 im = plt.matshow(W_learned, fignum=False, cmap='RdBu')
-ax8.set_xticks([], [])
 plt.tight_layout()
+plt.axis('off')
 
+# - Save and plot
 plt.savefig("figure1.png", dpi=1200)
-
 plt.show()
-
-
-plot_matrices(W_initial, W_optimal, W_learned, title_A=r"Initial $\Omega$", title_B=r"Optimal $\Omega$",title_C=r"Learned $\Omega$")

@@ -1,6 +1,6 @@
 import numpy as np 
 import matplotlib
-matplotlib.rc('font', family='Times New Roman')
+matplotlib.rc('font', family='Sans-Serif')
 matplotlib.rc('text', usetex=True)
 matplotlib.rcParams['lines.linewidth'] = 0.5
 matplotlib.rcParams['lines.markersize'] = 0.5
@@ -152,7 +152,7 @@ I_SL = 0.3 # nA
 lower_bound = I_rest - I_Omega_n_k / 2 - I_SL
 upper_bound = I_rest - I_Omega_n_k / 2 + I_SL
 
-fig = plt.figure(figsize=(5.0,4.0),constrained_layout=True)
+fig = plt.figure(figsize=(1.6*3.49,1.6*1.97),constrained_layout=True)
 gs = fig.add_gridspec(2, 1)
 ax1 = fig.add_subplot(gs[0,0])
 ax2 = fig.add_subplot(gs[1,0])
@@ -160,7 +160,6 @@ ax2 = fig.add_subplot(gs[1,0])
 ax1_twin = ax1.twinx()
 ax1_twin.plot(t_bit_values, bit_values, color='r')
 ax1_twin.set_ylabel(r"Bit value", color='r')
-ax1.set_title(r"Simulation I")
 ax1.step(t_Omega_n_k,lower_bound, where = 'post', color="C2", linestyle='--', label=r"$I_{\textnormal{lower}}$")
 ax1.step(t_Omega_n_k,upper_bound, where = 'post', color="C4", linestyle='--', label=r"$I_{\textnormal{upper}}$")
 ax1.plot(t_I_mem, I_mem, label=r"$I_{\textnormal{mem}}$")
@@ -181,13 +180,28 @@ if(len(DEC_onset) > len(DEC_offset)):
 ax1.set_ylabel(r"$I_{\textnormal{mem}}$ \textbf{[nA]}")
 ax1.legend(loc=1, prop={'size': 5})
 ax1.set_ylim([0,15])
+ax1.yaxis.set_ticks_position('none')
+ax1_twin.yaxis.set_ticks_position('none') 
+ax1.set_yticks([5,10])
+ax1_twin.set_yticks([-5, 5, 15])
+
+axes = [ax1,ax1_twin]
+for ax_tmp in axes:
+    ax_tmp.spines["top"].set_visible(False)
+    ax_tmp.spines["right"].set_visible(False)
+    ax_tmp.spines["left"].set_visible(False)
+    ax_tmp.spines["bottom"].set_visible(False)
+ax1.set_xticks([])
+
+ax1_twin.plot([0.015,0.065], [-4.5,-4.5], color="k", linewidth=0.5)
+ax1_twin.text(x=0.015, y=-6.5, s="50 ms")
 
 t_start = 0.18
 t_stop = 0.25
 ax2.plot(t_I_mem, I_mem)
 ax2_twin = ax2.twinx()
 ax2_twin.plot(t_bit_values, bit_values, color='r')
-ax2_twin.set_ylabel(r"Bit value", color='r')
+# ax2_twin.set_ylabel(r"Bit value", color='r')
 for (on,off) in zip(SL_onset,SL_offset):
     ax2.axvspan(on, off, facecolor='y', alpha=0.1)
 for (on,off) in zip(INC_onset,INC_offset):
@@ -199,8 +213,21 @@ ax2.step(t_Omega_n_k,upper_bound, where = 'post', color="C4", linestyle='--')
 ax2.set_xlim([t_start,t_stop])
 ax2.set_ylim([7,10])
 ax2.axhline(y=I_rest, color="C5", linestyle='--')
-ax2.set_ylabel(r"$I_{\textnormal{mem}}$ \textbf{[nA]}")
-ax2.set_xlabel(r"t \textbf{[s]}")
+
+axes = [ax2,ax2_twin]
+for ax_tmp in axes:
+    ax_tmp.spines["top"].set_visible(False)
+    ax_tmp.spines["right"].set_visible(False)
+    ax_tmp.spines["left"].set_visible(False)
+    ax_tmp.spines["bottom"].set_visible(False)
+
+ax2_twin.set_yticks([])
+ax2_twin.yaxis.set_ticks_position('none') 
+ax2_twin.set_xticks([])
+
+ax2_twin.plot([0.182,0.187], [-4.5,-4.5], color="k", linewidth=0.5)
+ax2_twin.text(x=0.182, y=-6.5, s="5 ms")
+ax2.set_yticks([])
 
 # - Draw rectangle in first plot
 # Create a Rectangle patch
