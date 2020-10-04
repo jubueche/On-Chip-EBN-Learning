@@ -113,4 +113,4 @@ plt.savefig("figure1.png", dpi=1200)
 plt.show()
 
 
-plot_matrices(W_i, omega_optimal_discrete, dr.lyrRes.weights, title_A=r"Initial $\Omega$", title_B=r"Optimal $\Omega$",title_C=r"Learned $\Omega$")
+plot_matrices(W_initial, W_optimal, W_learned, title_A=r"Initial $\Omega$", title_B=r"Optimal $\Omega$",title_C=r"Learned $\Omega$")
