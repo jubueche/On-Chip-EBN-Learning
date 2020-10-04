@@ -14,8 +14,21 @@ To run the script that was used in our paper, simply execute `$ python rockpool_
 
 The figure can then be generated using `$ python plotting.py`.
 
+<center>
+<img src=figure1.png width="500">
+</center>
+
 ## Simulations of the IC (Integrated Circuit)
 The point of having a discrete learning rule for EBNs is that they make a hardware implementation much easier. We developed an IC and simulated it in two basic experiments that are also described in the paper. The data obtained from these simulation is located in the folder `Simulations/`. To generate the rest of the plots in the paper, execute `$ python plotting1.py` or `$ python plotting2.py`.
+
+<center>
+<img src=sim1_plot.png width="500">
+</center>
+
+<center>
+<img src=sim2_plot.png width="500">
+</center>
+
 
 ## Acknowledgement
 ...missing
