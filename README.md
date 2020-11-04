@@ -1,7 +1,7 @@
 # On-Chip Learning of EBNs (Efficient Balanced Networks)
 
 This repository contains the scripts that were used to test the discrete learning rule on a network of 20 leaky integrate-and-fire neurons to drive
-a random recurrent weight into a balanced regime.
+a random recurrent weight into a balanced regime. Link to the paper: https://arxiv.org/abs/2010.14353
 
 ## Requirements
 Please install [rockpool](https://github.com/jubueche/Rockpool) using `$ pip install -e . --user` (more detailed instructions are in the repository).
@@ -34,4 +34,12 @@ The point of having a discrete learning rule for EBNs is that they make a hardwa
 
 
 ## Acknowledgement
-...missing
+```
+@misc{büchel2020implementing,
+      title={Implementing efficient balanced networks with mixed-signal spike-based learning circuits}, 
+      author={Julian Büchel and Jonathan Kakon and Michel Perez and Giacomo Indiveri},
+      year={2020},
+      eprint={2010.14353},
+      archivePrefix={arXiv},
+      primaryClass={cs.ET}}
+```
