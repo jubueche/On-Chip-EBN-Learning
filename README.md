@@ -1,7 +1,7 @@
 # On-Chip Learning of EBNs (Efficient Balanced Networks)
 
 This repository contains the scripts that were used to test the discrete learning rule on a network of 20 leaky integrate-and-fire neurons to drive
-a random recurrent weight into a balanced regime. Link to the paper: https://arxiv.org/abs/2010.14353
+a random recurrent weight into a balanced regime, as well as a pdf showing the derivations of the learning rule in more detail. Link to the paper: https://arxiv.org/abs/2010.14353
 
 ## Requirements
 Please install [rockpool](https://github.com/jubueche/Rockpool) using `$ pip install -e . --user` (more detailed instructions are in the repository).

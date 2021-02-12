@@ -50,7 +50,7 @@ ax0.plot([0.5,0.55], [-0.08,-0.08], color="k", linewidth=0.5)
 ax0.text(x=0.5, y=-0.11, s="50 ms")
 ax0.set_ylim(top_lim)
 lines = [l1[0],l2[0]]
-ax0.legend(lines,[r"$\hat{x}$", r"$x$"], frameon=False, loc=2, prop={'size': 5})
+ax0.legend(lines,[r"$\hat{x}$", r"$x$"], frameon=False, loc=2, prop={'size': 7})
 
 ax1 = fig.add_subplot(332)
 ax1.set_title(r"\textbf{B}")
@@ -66,7 +66,7 @@ ax2.plot(t_sub,target_sub, color="C4")
 ax2.set_xticks([t_start,t_stop])
 ax2.set_ylim(top_lim)
 
-axes_top = [ax0,ax1,ax2]
+axes_top = [ax1,ax2]
 for ax_tmp in axes_top:
     ax_tmp.spines["top"].set_visible(False)
     ax_tmp.spines["right"].set_visible(False)
@@ -75,6 +75,11 @@ for ax_tmp in axes_top:
     ax_tmp.set_xticks([])
     ax_tmp.set_yticks([])
 
+ax0.spines["top"].set_visible(False)
+ax0.spines["right"].set_visible(False)
+ax0.spines["bottom"].set_visible(False)
+ax0.set_xticks([])
+
 ax3 = fig.add_subplot(334)
 nNetSize = W_initial.shape[0]
 tDuration = t[-1]
@@ -82,8 +87,8 @@ channels = initial_channels
 times = initial_times
 channels_id_initial = channels[channels >= 0]
 times_initial = times[channels >= 0]
-ax3.scatter(times_initial, channels_id_initial, color="k")
-ax3.set_yticks([0,nNetSize])
+ax3.scatter(times_initial, 1+channels_id_initial, color="k")
+ax3.set_yticks([1,nNetSize+1])
 ax3.set_xticks([0,tDuration])
 ax3.set_ylabel(r"Neuron ID")
 
@@ -109,7 +114,7 @@ ax5.scatter(times_learned, channels_id_learned, color="k")
 ax5.set_yticks([0,nNetSize])
 ax5.set_xticks([0,tDuration])
 
-axes_mid = [ax3,ax4,ax5]
+axes_mid = [ax4,ax5]
 
 for ax_tmp in axes_mid:
     ax_tmp.spines["top"].set_visible(False)
@@ -119,19 +124,34 @@ for ax_tmp in axes_mid:
     ax_tmp.set_xticks([])
     ax_tmp.set_yticks([])
 
+ax3.spines["top"].set_visible(False)
+ax3.spines["right"].set_visible(False)
+ax3.spines["bottom"].set_visible(False)
+ax3.set_xticks([])
+ax3.set_yticks([1,20])
 
 ax6 = fig.add_subplot(337)
-im = plt.matshow(W_initial, fignum=False, cmap='RdBu')
-plt.axis('off')
+im = plt.matshow(W_initial / 100, fignum=False, cmap='RdBu')
+#plt.axis('off')
+plt.xticks([])
+#plt.yticks([])
+plt.ylabel(r"Neuron ID")
+plt.gca().spines["top"].set_visible(False)
+plt.gca().spines["right"].set_visible(False)
+plt.gca().spines["bottom"].set_visible(False)
+
+plt.colorbar(ticks=[-0.9,0,0.9])
 
 ax7 = fig.add_subplot(338)
-im = plt.matshow(W_optimal, fignum=False, cmap='RdBu')
+im = plt.matshow(W_optimal / 100, fignum=False, cmap='RdBu')
 plt.axis('off')
+#plt.colorbar(ticks=[-0.9,0,0.9])
 
 ax8 = fig.add_subplot(339)
-im = plt.matshow(W_learned, fignum=False, cmap='RdBu')
+im = plt.matshow(W_learned / 100, fignum=False, cmap='RdBu')
 plt.tight_layout()
 plt.axis('off')
+#plt.colorbar(ticks=[-0.9,0,0.9])
 
 # - Save and plot
 plt.savefig("figure1.png", dpi=1200)
